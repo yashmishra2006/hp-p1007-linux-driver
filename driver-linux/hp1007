@@ -1,0 +1,55 @@
+#!/bin/sh
+# CUPS filter: PDF -> HP LaserJet P1007 (HP-exact PJL/XQX/JBIG stream).
+#   argv: job-id user title copies options [file]
+# Rendering: Ghostscript at 1200x600 dpi, 1 bit, full sheet.
+# Encoding:  hp1007enc (crops HP's 47/300 in margins, JBIG, XQX records).
+
+set -e
+[ $# -lt 5 ] && { echo "Usage: $0 job-id user title copies options [file]" >&2; exit 1; }
+
+OPTIONS=" $5 "
+ENC="${HP1007ENC:-$(dirname "$0")/hp1007enc}"
+GS="${GS:-gs}"
+
+# Job option wins; otherwise the queue's PPD default.
+opt() {
+    v=$(printf '%s' "$OPTIONS" | tr ' ' '\n' | sed -n "s/^$1=//p" | tail -n 1)
+    [ -z "$v" ] && [ -r "$PPD" ] && v=$(sed -n "s/^\*Default$1: *\([^ ]*\).*/\1/p" "$PPD" | tr -d '\r')
+    printf '%s' "$v"
+}
+
+# PageSize -> DMPAPER code and sheet size in points (HP1006SD.SDD paper list)
+case "$(opt PageSize)" in
+    Letter|na_letter*)   PAPER=1;  W=612; H=792  ;;
+    Legal|na_legal*)     PAPER=5;  W=612; H=1008 ;;
+    Executive|na_exec*)  PAPER=7;  W=522; H=756  ;;
+    A5|iso_a5*)          PAPER=11; W=420; H=595  ;;
+    B5|jis_b5*)          PAPER=13; W=516; H=729  ;;
+    A6|iso_a6*)          PAPER=70; W=297; H=420  ;;
+    *)                   PAPER=9;  W=595; H=842  ;;   # A4
+esac
+
+DENSITY=$(opt Density);  DENSITY=${DENSITY#Density}
+case "$DENSITY" in [1-5]) ;; *) DENSITY=3 ;; esac
+
+ECON=""
+case "$(opt EconoMode)" in True|true|on|yes) ECON="-e" ;; esac
+
+case "$(opt InputSlot)" in
+    Manual) SOURCE=4 ;;
+    *)      SOURCE=7 ;;
+esac
+
+TMP=$(mktemp -d "${TMPDIR:-/tmp}/hp1007.XXXXXX")
+trap 'rm -rf "$TMP"' EXIT INT TERM
+
+# Ghostscript needs a seekable PDF.
+if [ -n "$6" ]; then IN="$6"; else IN="$TMP/in.pdf"; cat > "$IN"; fi
+
+echo "INFO: hp1007: paper=$PAPER density=$DENSITY econo=${ECON:-off} source=$SOURCE" >&2
+
+"$GS" -q -dBATCH -dNOPAUSE -dSAFER -dQUIET -dNOINTERPOLATE \
+      -sDEVICE=pbmraw -r1200x600 \
+      -dDEVICEWIDTHPOINTS=$W -dDEVICEHEIGHTPOINTS=$H -dFIXEDMEDIA -dPDFFitPage \
+      -sOutputFile=- "$IN" \
+  | "$ENC" -p "$PAPER" -d "$DENSITY" -s "$SOURCE" $ECON

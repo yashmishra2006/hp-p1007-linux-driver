@@ -1,0 +1,29 @@
+%!PS-Adobe-3.0
+%%BoundingBox: 0 0 595 842
+%%DocumentMedia: A4 595 842 0 () ()
+%%Pages: 1
+%%EndComments
+%%Page: 1 1
+<< /PageSize [595.28 841.89] >> setpagedevice
+/mm { 72 mul 25.4 div } def
+/Helvetica findfont 11 scalefont setfont
+% boxes inset 3, 5, 10 mm from the paper edge
+0.5 setlinewidth
+[3 5 10] { /i exch def newpath i mm i mm moveto 210 i 2 mul sub mm 0 rlineto 0 297 i 2 mul sub mm rlineto 210 i 2 mul sub mm neg 0 rlineto closepath stroke
+  i 1 add mm 297 i sub 3 sub mm moveto i 3 string cvs show (mm) show } forall
+% crosshair at page centre
+newpath 105 mm 138.5 mm moveto 0 20 mm rlineto 95 mm 148.5 mm moveto 20 mm 0 rlineto stroke
+% title
+/Helvetica-Bold findfont 22 scalefont setfont 20 mm 270 mm moveto (P1007 test - foo2xqx path) show
+/Helvetica findfont 11 scalefont setfont 20 mm 262 mm moveto (Top-left of this line is 20 mm from the left edge.) show
+% grey ramp, 11 steps
+0 1 10 { /k exch def k 10 div setgray newpath 20 k 15 mul add mm 200 mm moveto 15 mm 0 rlineto 0 20 mm rlineto -15 mm 0 rlineto closepath fill } for
+0 setgray
+% hairlines at 0.1, 0.25, 0.5, 1 pt
+[0.1 0.25 0.5 1] { /w exch def w setlinewidth newpath 20 mm 180 mm w 20 mul sub moveto 170 mm 0 rlineto stroke } forall
+% small text sizes
+[4 6 8 10 14] { /s exch def /Times-Roman findfont s scalefont setfont 20 mm 100 s 3 mul add mm moveto (The quick brown fox jumps over the lazy dog 0123456789) show } forall
+% solid black block
+newpath 150 mm 20 mm moveto 40 mm 0 rlineto 0 40 mm rlineto -40 mm 0 rlineto closepath fill
+showpage
+%%EOF

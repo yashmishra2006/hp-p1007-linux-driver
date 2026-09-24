@@ -1,0 +1,16 @@
+# HP proprietary files: not redistributable. See driver/metadata/SHA256SUMS
+# and docs/driver.md for how to obtain and unpack the HP package.
+driver/original/
+driver/extracted/
+driver/metadata/*.txt
+analysis/reports/demo-decode/
+analysis/reports/.log_mark
+
+# Generated / large artifacts
+*.pbm
+*.prn
+*.xqx
+tests/out/
+analysis/foo2xqx/
+driver-linux/hp1007enc
+driver-linux/backup-*.ppd

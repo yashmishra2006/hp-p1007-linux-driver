@@ -1,0 +1,21 @@
+%!PS-Adobe-3.0
+%%Pages: 2
+%%EndComments
+/mm { 72 mul 25.4 div } def
+%%Page: 1 1
+<< /PageSize [595 842] >> setpagedevice
+% full-width smooth horizontal gradient band
+0 1 199 { /i exch def i 199 div setgray newpath 15 mm i 0.9 mul add mm 150 mm moveto 1 mm 0 rlineto 0 120 mm rlineto -1 mm 0 rlineto closepath fill } for
+% radial shading block
+/r 0 def 60 -1 1 { /r exch def r 60 div setgray newpath 105 mm 80 mm r mm 0 360 arc fill } for
+0 setgray /Helvetica-Bold findfont 20 scalefont setfont 15 mm 280 mm moveto (hp1007 stress test - page 1 of 2) show
+/Helvetica findfont 10 scalefont setfont 15 mm 275 mm moveto (Smooth gradient above should have no bands or gaps; circle shading below.) show
+showpage
+%%Page: 2 2
+<< /PageSize [595 842] >> setpagedevice
+/Helvetica-Bold findfont 20 scalefont setfont 15 mm 280 mm moveto (Page 2 of 2 - text) show
+/Times-Roman findfont 11 scalefont setfont
+0 1 45 { /n exch def 15 mm 265 n 5.5 mul sub mm moveto (Line ) show n 3 string cvs show ( - The quick brown fox jumps over the lazy dog. 0123456789 ABCDEFGHIJKLMNOPQRSTUVWXYZ) show } for
+0.3 setlinewidth newpath 10 mm 10 mm moveto 190 mm 0 rlineto 0 277 mm rlineto -190 mm 0 rlineto closepath stroke
+showpage
+%%EOF
