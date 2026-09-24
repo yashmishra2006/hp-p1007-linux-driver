@@ -109,3 +109,7 @@ Because foo2xqx already implements XQX, the first Linux test is probably not wri
 
 ## Waiting on
 EXP-001 capture files plus the §3 information. No protocol claims beyond the table above until then.
+
+## License
+
+GPL-2.0. See [LICENSE](LICENSE).

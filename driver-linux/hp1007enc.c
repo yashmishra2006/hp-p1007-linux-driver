@@ -7,6 +7,9 @@
  * MarginMetric=47/300 in, PixAlignX=128, PixAlignY=4, ATMOVE HP2=-12.
  * See protocol/packet-format.md.
  *
+ * Copyright (C) 2026 Yash Mishra
+ * SPDX-License-Identifier: GPL-2.0-only
+ *
  * Input:  one or more concatenated raw PBM (P4) pages at 1200x600 dpi, each
  *         covering the full sheet (e.g. Ghostscript -sDEVICE=pbmraw -r1200x600).
  * Output: PJL + XQX stream on stdout.
