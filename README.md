@@ -2,10 +2,28 @@
 
 A small CUPS driver for the HP LaserJet P1007 that sends the printer the same PJL/XQX/JBIG stream as HP's Windows driver. It was built from HP's own reference data and tested on real hardware.
 
+## Quick install (one line)
+
+Plug in and switch on the printer, then:
+
+```sh
+curl -fsSL https://raw.githubusercontent.com/yashmishra2006/hp-p1007-linux-driver/main/get.sh | sudo sh
+```
+
+This installs the dependencies (Debian/Ubuntu/Raspberry Pi OS), downloads the driver to `/opt/hp-p1007-linux-driver`, builds it, and sets up the `HP_P1007` print queue. Then print from any app, or:
+
+```sh
+lp -d HP_P1007 document.pdf
+```
+
+Uninstall: `sudo /opt/hp-p1007-linux-driver/driver-linux/uninstall.sh`
+
+## Manual install
+
 ```sh
 sudo apt install ghostscript libjbig-dev build-essential cups
-sudo driver-linux/install.sh            # switches/creates the HP_P1007 queue
-lp -d HP_P1007 document.pdf
+git clone https://github.com/yashmishra2006/hp-p1007-linux-driver
+sudo hp-p1007-linux-driver/driver-linux/install.sh    # switches/creates the HP_P1007 queue
 ```
 
 No firmware upload is needed. The format is documented in [`protocol/packet-format.md`](protocol/packet-format.md) and the tests in [`docs/experiments.md`](docs/experiments.md).
